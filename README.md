@@ -16,7 +16,8 @@
 ### Usage:
 * Clone repo, i.e., `git clone https://github.com/aharshbe/loaner_automation`
 * In your terminal, cd into the repo
-* Type python3 ./loaner_automation_ui.py
+* cd into `loaner_automation/files`
+* Type `python3 ./loaner_automation_ui.py`
 
 
 #### Authors:
