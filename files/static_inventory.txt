@@ -1,5 +1,0 @@
-Loaner Static Inventory:
-- C02XL100JHD3 (UK Keyboard)
-- C02W200DHV2V
-- C02TC2VJGTF1
-- C02TL0WZH040
