@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Obtain variables from UI and assign them to more understandable values
 fullname=$1
