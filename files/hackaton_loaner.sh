@@ -3,7 +3,7 @@
 #!/usr/bin/env bash
 USER_LOGIN="hackathon"
 USER_FULLANME="hackathon"
-USER_PASSWORD="octocat11"
+USER_PASSWORD="passwordhere"
 
 # Create Admin account
 function create_user_account()
