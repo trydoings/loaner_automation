@@ -13,7 +13,7 @@
 ### Dependencies:
 * Python 3.7 installed
 * Python .env and .env credentials
-	* sudo pip3 install -U python-dotenv
+	* `sudo pip3 install -U python-dotenv`
 
 ### Usage:
 * Clone repo, i.e., `git clone https://github.com/aharshbe/loaner_automation`
