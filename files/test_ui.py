@@ -2,6 +2,11 @@ from tkinter import *
 from tkinter import messagebox
 import sys, os
 
+# Import .env crednetials
+from dotenv import load_dotenv
+load_dotenv()
+
+
 class loaner_automation:
     def __init__(self, master):
         self.master = master
@@ -132,7 +137,7 @@ class loaner_automation:
             self.label_text.set("\nSet-up finished. \nPlease exit this window\n then, logout of your machine\n and into your new account.")
             self.exit_button.pack()
             fullname_to_send=self.fullname.replace(" ", "")
-            os.system('./test.sh '+fullname_to_send+' '+self.handle+' '+self.password)
+            os.system('./test.sh '+fullname_to_send+' '+self.handle+' '+self.password+' '+os.getenv('oldpassword'))
         else:
             self.label.destroy()
             my_gui = loaner_automation(root)

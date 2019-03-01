@@ -4,16 +4,17 @@
 fullname=$1
 handle=$2
 password=$3
+oldpassword=$4
 
-echo "Full name: $fullname Handle: $handle Password: $password"
+echo "Full name: $fullname Handle: $handle Password: $password Oldpassowrd: $oldpassword"
 
-ShortName=`/usr/bin/who | awk '/console/{ print $1 }' | tail -n 1`
-FullName=`dscl . -read /Users/$ShortName RealName | tail -1`
+ShortName=`whoami`
+FullName=`dscl . -read /Users/$ShortName RealName | tail -1 | sed 's/[^ ]* //'`
 
-sudo dscl . change /Users/$ShortName RealName $FullName $handle
-sudo dscl . -passwd /Users/$handle $password
+echo $oldpassword | sudo -S dscl . change /Users/$ShortName RealName $FullName $handle
+echo $oldpassword | sudo -S dscl . -passwd /Users/$handle $password
 
 echo "User credentials changed."
 
 # Log out
-osascript -e 'tell application "loginwindow" to  «event aevtrlgo»'
+# osascript -e 'tell application "loginwindow" to  «event aevtrlgo»'
