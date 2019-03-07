@@ -2,6 +2,11 @@ from tkinter import *
 from tkinter import messagebox
 import sys, os
 
+# Import .env crednetials
+from dotenv import load_dotenv
+load_dotenv()
+
+
 class loaner_automation:
     def __init__(self, master):
         self.master = master
@@ -37,10 +42,18 @@ class loaner_automation:
         self.exit_button = Button(master, text="Exit", command=self.exit)
         self.submit_button.pack()
 
+        self.passwordIsHidden = "true"
+
     def show_passowrd(self):
         self.enter_password.config(show="")
+        self.enter_password_confirmation.config(show="")
+        self.show_password_button.pack_forget()
+        self.hide_password_button.pack()
     def hide_passowrd(self):
         self.enter_password.config(show="*")
+        self.enter_password_confirmation.config(show="*")
+        self.hide_password_button.pack_forget()
+        self.show_password_button.pack()
     # Confirm passwords:
     def confirm_passwords(self):
         self.label_name.pack_forget()
@@ -58,12 +71,13 @@ class loaner_automation:
                 self.enter_password_confirmation.pack_forget()
                 self.confirm_passwords_button.pack_forget()
                 self.show_password_button.pack_forget()
+                self.hide_password_button.pack_forget()
 
                 self.label_text.set("Please click continue below to finish set-up.")
                 self.continue_button.pack()
             else:
                 messagebox.showwarning("Error", "Passwords don't match, try again")
-                self.show_password_button.pack()
+                self.hide_passowrd()
                 self.enter_password_confirmation.delete(0,len(self.confirmed_password))
         else:
             err3="Error, passwords need to match, try again."
@@ -131,7 +145,8 @@ class loaner_automation:
             self.continue_button.destroy()
             self.label_text.set("\nSet-up finished. \nPlease exit this window\n then, logout of your machine\n and into your new account.")
             self.exit_button.pack()
-            os.system('./test.sh '+self.fullname.strip()+' '+self.handle+' '+self.password)
+            fullname_to_send=self.fullname.replace(" ", "")
+            os.system('./test.sh '+fullname_to_send+' '+self.handle+' '+self.password+' '+os.getenv('oldpassword'))
         else:
             self.label.destroy()
             my_gui = loaner_automation(root)

@@ -42,10 +42,18 @@ class loaner_automation:
         self.exit_button = Button(master, text="Exit", command=self.exit)
         self.submit_button.pack()
 
+        self.passwordIsHidden = "true"
+
     def show_passowrd(self):
         self.enter_password.config(show="")
+        self.enter_password_confirmation.config(show="")
+        self.show_password_button.pack_forget()
+        self.hide_password_button.pack()
     def hide_passowrd(self):
         self.enter_password.config(show="*")
+        self.enter_password_confirmation.config(show="*")
+        self.hide_password_button.pack_forget()
+        self.show_password_button.pack()
     # Confirm passwords:
     def confirm_passwords(self):
         self.label_name.pack_forget()
@@ -63,12 +71,13 @@ class loaner_automation:
                 self.enter_password_confirmation.pack_forget()
                 self.confirm_passwords_button.pack_forget()
                 self.show_password_button.pack_forget()
+                self.hide_password_button.pack_forget()
 
                 self.label_text.set("Please click continue below to finish set-up.")
                 self.continue_button.pack()
             else:
                 messagebox.showwarning("Error", "Passwords don't match, try again")
-                self.show_password_button.pack()
+                self.hide_passowrd()
                 self.enter_password_confirmation.delete(0,len(self.confirmed_password))
         else:
             err3="Error, passwords need to match, try again."
