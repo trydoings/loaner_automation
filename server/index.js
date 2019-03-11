@@ -1,7 +1,13 @@
 var express = require('express')
 var bodyParser = require('body-parser');
+var mongoose = require("mongoose");
 var app = express()
 var port = 3000
+var database = 'test'
+
+//will create database if one does not already exist
+mongoose.connect(`mongodb://localhost:27017/${database}`, { useNewUrlParser: true });
+
 
 var rawBodySaver = function (req, res, buf, encoding) {
   if (buf && buf.length) {
