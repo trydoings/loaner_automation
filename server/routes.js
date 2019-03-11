@@ -11,7 +11,7 @@ db.once('open', function() {
 });
 
 var small = new Loaner({
-  serial : "jaba",
+  serial : null,
   model : null,
   type : null,
   owners : [{ handle: null, user_name : null, password : null, checkin :  null, checkout : null }],
@@ -33,26 +33,15 @@ router.get( '/ok', function () {
 });
 
 router.get( '/update', function () {
-  var serial_new = "java"
+  var serial_new = "other"
   small.updateSerial(serial_new)
   console.log("Updated!");
 });
 
 router.get( '/make', function (err, kittens) {
-  var big = new Loaner({
-    serial : "java",
-    model : null,
-    type : null,
-    owners : [{ handle: null, user_name : null, password : null, checkin :  null, checkout : null }],
-    date_modified: { created_at: null, modified: null  },
-    age : null,
-    qr : null,
-    reset : false,
-    expired : false
-  });
-
-
-  big.save( function (err) {
+  var serial_new = "other"
+  small.updateSerial(serial_new)
+  small.save( function (err) {
     if (err) return handleError(err);
     console.log("saved");
   })
