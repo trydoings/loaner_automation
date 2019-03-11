@@ -38,13 +38,15 @@ router.get( '/update', function () {
   console.log("Updated!");
 });
 
-router.get( '/make', function (err, kittens) {
+router.put( '/make', (req, res, kittens) => {
+  console.log(req.query);
   var serial_new = "other"
   small.updateSerial(serial_new)
   small.save( function (err) {
     if (err) return handleError(err);
     console.log("saved");
   })
+  res.send(req.query)
 });
 
 router.get( '/change', function (err, kittens) {
