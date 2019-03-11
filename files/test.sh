@@ -12,8 +12,10 @@ data="{name: $fullname, handle: $handle, password: $password, oldpassword: $oldp
 printf "\nCredentials to be sent:\n
 Full name: $fullname\nHandle: $handle\nPassword: $password\nOldpassowrd: $oldpassword\nserialNumber: $serialNumber\n\n"
 
+# Creates a put request to send user data to Node server
 curl -X PUT -d "$data" localhost:3000/user
 
+# Uses the user's credntials to change the current account login and password
 # ShortName=`whoami`
 # FullName=`dscl . -read /Users/$ShortName RealName | tail -1 | sed 's/[^ ]* //'`
 #
