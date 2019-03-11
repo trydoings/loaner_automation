@@ -3,7 +3,8 @@ var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
 var app = express()
 var port = 3000
-var database = 'test'
+var database = 'thing'
+var test = require('./routes')
 
 //will create database if one does not already exist
 mongoose.connect(`mongodb://localhost:27017/${database}`, { useNewUrlParser: true });
@@ -34,5 +35,7 @@ app.put('/user', function (req, res) {
 app.delete('/user', function (req, res) {
   res.send('Got a DELETE request at /user')
 })
+
+app.use('/test', test);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
