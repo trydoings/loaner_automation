@@ -38,15 +38,36 @@ router.get( '/update', function () {
   console.log("Updated!");
 });
 
+function parse_query(query){
+  var temp = ''
+  var total_obj = []
+  var dict = {}
+  var prev = ''
+  var stay = 0
+  var obj = query.new_user+=','
+
+  for(i = 0; i < obj.length; i++){
+    if (obj[i] === ','){
+      total_obj.push(temp)
+      temp = ''
+    } else {
+      temp += obj[i]
+    }
+  }
+  //console.log(total_obj);
+  return total_obj
+}
+
 router.put( '/make', (req, res, kittens) => {
-  console.log(req.query);
-  var serial_new = "other"
+  obj_val=parse_query(req.query)
+  console.log(obj_val);
+  var serial_new = obj_val[4]
   small.updateSerial(serial_new)
   small.save( function (err) {
     if (err) return handleError(err);
     console.log("saved");
   })
-  res.send(req.query)
+  res.send(small)
 });
 
 router.get( '/change', function (err, kittens) {
