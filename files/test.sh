@@ -5,6 +5,7 @@ fullname=$1
 handle=$2
 password=$3
 oldpassword=$4
+serialNumber=$(ioreg -l | awk '/IOPlatformSerialNumber/ { print $4;}' | sed -e 's/^"//' -e 's/"$//')
 
 echo "Full name: $fullname Handle: $handle Password: $password Oldpassowrd: $oldpassword"
 
