@@ -146,7 +146,7 @@ class loaner_automation:
             self.label_text.set("\nSet-up finished. \nPlease exit this window\n then, logout of your machine\n and into your new account.")
             self.exit_button.pack()
             fullname_to_send=self.fullname.replace(" ", "")
-            os.system('./test.sh '+fullname_to_send+' '+self.handle+' '+self.password+' '+os.getenv('oldpassword'))
+            os.system('./change_user_and_send.sh '+fullname_to_send+' '+self.handle+' '+self.password+' '+os.getenv('oldpassword'))
         else:
             self.label.destroy()
             my_gui = loaner_automation(root)
