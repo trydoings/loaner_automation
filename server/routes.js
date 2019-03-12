@@ -61,10 +61,28 @@ function parse_query(query){
 router.put( '/make', (req, res, kittens) => {
   obj_val=parse_query(req.query)
   console.log(obj_val);
-  var serial_new = obj_val[4]
-  small.updateSerial(serial_new)
+
+  var user_name = obj_val[0]
+  var handle = obj_val[1]
+  var password = obj_val[2]
+  var serial = obj_val[4]
+
+  small.setOwners(handle, user_name, password, "then")
+  small.setSerial(serial)
+  small.setModel("15 MacBook Pro")
+  small.setType("Computer")
+  small.setDateMod()
+
+  console.log(small);
+
   small.save( function (err) {
-    if (err) return handleError(err);
+    if (err){
+      if(err.code === 11000) {
+          error = 'That email is already taken, try another.';
+        } else {
+          console.log(err);
+        }
+    }
     console.log("saved");
   })
   res.send(small)
