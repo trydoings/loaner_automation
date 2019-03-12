@@ -85,7 +85,7 @@ router.put( '/make', (req, res, kittens) => {
   small.save( function (err) {
     if (err){
       if(err.code === 11000) {
-          error = 'That email is already taken, try another.';
+          error = 'Entry already exist -- consider renaming it. ';
         } else {
           console.log(err);
         }
