@@ -6,11 +6,19 @@ handle=$2
 password=$3
 oldpassword=$4
 serialNumber=$(ioreg -l | awk '/IOPlatformSerialNumber/ { print $4;}' | sed -e 's/^"//' -e 's/"$//')
+model=$(sysctl hw.model | sed 's/[^ ]* //')
+type=""
 
-data="$fullname,$handle,$password,$oldpassword,$serialNumber"
+if [[ $model == *"MacBook"* ]]; then
+   $type="Computer"
+ else
+   $type="Non-computer"
+fi
+
+data="$fullname,$handle,$password,$oldpassword,$serialNumber,$model,$type"
 
 printf "\nCredentials to be sent:\n
-Full name: $fullname\nHandle: $handle\nPassword: $password\nOldpassowrd: $oldpassword\nserialNumber: $serialNumber\n\n"
+Full name: $fullname\nHandle: $handle\nPassword: $password\nOldpassowrd: $oldpassword\nserialNumber: $serialNumber\nmodel: $model\ntype: $type\n\n"
 
 # Creates a put request to send user data to Node server
 curl -X PUT localhost:3000/test/make?new_user=$data

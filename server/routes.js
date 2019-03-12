@@ -10,19 +10,22 @@ db.once('open', function() {
   console.log("we're connected!");
 });
 
-var small = new Loaner({
-  serial : null,
-  model : null,
-  type : null,
-  owners : [{ handle: null, user_name : null, password : null, checkin :  null, checkout : null }],
-  date_modified: { created_at: null, modified: null  },
-  age : null,
-  qr : null,
-  reset : false,
-  expired : false
-});
+function create_new_object(serial){
+  var serial = new Loaner({
+    serial : null,
+    model : null,
+    type : null,
+    owners : [{ handle: null, user_name : null, password : null, checkin :  null, checkout : null }],
+    date_modified: { created_at: null, modified: null  },
+    age : null,
+    qr : null,
+    reset : false,
+    expired : false
+  });
+  return serial
+}
 
-console.log(small);
+
 // get one user
 router.get( '/test', () => {
   small.getSerial()
@@ -66,11 +69,15 @@ router.put( '/make', (req, res, kittens) => {
   var handle = obj_val[1]
   var password = obj_val[2]
   var serial = obj_val[4]
+  var model = obj_val[5]
+  var type = obj_val[6]
+
+  var small = create_new_object(serial)
 
   small.setOwners(handle, user_name, password, "then")
   small.setSerial(serial)
-  small.setModel("15 MacBook Pro")
-  small.setType("Computer")
+  small.setModel(model)
+  small.setType(type)
   small.setDateMod()
 
   console.log(small);
