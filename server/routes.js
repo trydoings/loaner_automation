@@ -44,9 +44,6 @@ router.get( '/update', function () {
 function parse_query(query){
   var temp = ''
   var total_obj = []
-  var dict = {}
-  var prev = ''
-  var stay = 0
   var obj = query.new_user+=','
 
   for(i = 0; i < obj.length; i++){
