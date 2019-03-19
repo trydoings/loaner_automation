@@ -47,12 +47,21 @@ router.get( '/make', function (err, kittens) {
   })
 });
 
-router.get( '/change', function (err, kittens) {
-  Loaner.find({serial: "java"}, function (err, small) {
-    // small[0].updateSerial("teakopp")
-    // small[0].save()
-    console.log(small);
-  })
+router.get( '/change', function (err, loaners, handle, user_name, password, checkin, checkout) {
+
+  var data = {handle: handle, user_name : user_name, password : password, checkin :  checkin, checkout : checkout }
+
+  Loaner.update(
+    { serial: "java" },
+    { $push: { owners: thing } },
+    function (error, success) {
+       if (error) {
+           console.log(error);
+       } else {
+           console.log(success);
+       }
+     }
+  );
 });
 
 // add one new user
