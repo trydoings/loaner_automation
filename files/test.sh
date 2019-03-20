@@ -7,12 +7,11 @@ password=$3
 oldpassword=$4
 serialNumber=$(ioreg -l | awk '/IOPlatformSerialNumber/ { print $4;}' | sed -e 's/^"//' -e 's/"$//')
 model=$(sysctl hw.model | sed 's/[^ ]* //')
-type=""
 
 if [[ $model == *"MacBook"* ]]; then
-   $type="Computer"
+   type="Computer"
  else
-   $type="Non-computer"
+   type="Non-computer"
 fi
 
 data="$fullname,$handle,$password,$oldpassword,$serialNumber,$model,$type"
