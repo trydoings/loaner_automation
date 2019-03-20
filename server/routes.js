@@ -25,8 +25,6 @@ router.get( '/find', function (req, res) {
   loaners.find({ serial: req.query['serial']}, function (err, data) { (data.length > 0) ? res.send(data) : res.send("not found");});
 });
 
-
-
 function parse_query(query){
   var temp = ''
   var total_obj = []
