@@ -5,7 +5,8 @@ var LoanerSchema = new mongoose.Schema({
   model : String,
   type : String,
   owners : [{ handle: String, user_name : String, password : String, checkin :  String, checkout : String }],
-  date_modified: { created_at: String, modified: String  },
+  created_at: String,
+  modified: String,
   age : Number,
   qr : String,
   reset : Boolean,
@@ -48,8 +49,8 @@ LoanerSchema.methods.setType = function (type) {
 
 LoanerSchema.methods.setDateMod = function () {
   var hours = new Date(Date.now()).toLocaleString();
-  dict = {created_at: hours, modified: hours}
-  this.date_modified = dict
+  this.created_at = hours
+  this.modified = hours
 }
 
 Loaner = mongoose.model('Loaner', LoanerSchema);

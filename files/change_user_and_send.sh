@@ -22,7 +22,7 @@ FullName=`dscl . -read /Users/$ShortName RealName | tail -1 | sed 's/[^ ]* //'`
 echo $oldpassword | sudo -S dscl . change /Users/$ShortName RealName $FullName $handle
 echo $oldpassword | sudo -S dscl . -passwd /Users/$handle $password
 
-printf "\nUser credentials changed."
+printf "\nUser credentials changed.\n"
 
 # Log out
 osascript -e 'tell application "loginwindow" to  «event aevtrlgo»'

@@ -18,10 +18,12 @@ router.get( '/test', (req,res) => {
 
 router.get( '/ok', function () {
   console.log("ok");
+  res.send("ok")
 });
 
 
 router.get( '/find', function (req, res) {
+  console.log(req.query);
   loaners.find({ serial: req.query['serial']}, function (err, data) { (data.length > 0) ? res.send(data) : res.send("not found");});
 });
 
@@ -58,6 +60,25 @@ function actualize_object(new_object){
   }
 }
 
+function addUser(handle, user_name, password, checkout, serial){
+  var hours = new Date(Date.now()).toLocaleString();
+  var data = { handle: handle, user_name : user_name, password : password, checkin :  hours, checkout : checkout }
+  loaners.updateOne(
+    { serial: serial },
+    { $push: { owners: data } },
+    function (error, success) {
+       if (error) {console.log(error);} else {console.log(success);}
+     }
+  );
+  loaners.updateOne(
+    { serial: serial },
+    { $set: { modified: hours } },
+    function (error, success) {
+       if (error) {console.log(error);} else {console.log(success);}
+     }
+  );
+}
+
 function check_for_existing_entry(user_name, handle, password, serial, model, type){
   loaners.find({serial:serial}, function(err,data){
     if (!data[0]){
@@ -72,6 +93,7 @@ function check_for_existing_entry(user_name, handle, password, serial, model, ty
     } else {
       serial = data[0].serial
       console.log(serial,": serial already exists use /find.");
+      addUser(handle, user_name, password, "then", serial)
     }
   })
 }
@@ -90,21 +112,5 @@ router.put( '/make', (req, res, kittens) => {
 
 });
 
-router.get( '/change', function (err, loaners, handle, user_name, password, checkin, checkout) {
-
-  var data = {handle: handle, user_name : user_name, password : password, checkin :  checkin, checkout : checkout }
-
-  Loaner.update(
-    { serial: "java" },
-    { $push: { owners: thing } },
-    function (error, success) {
-       if (error) {
-           console.log(error);
-       } else {
-           console.log(success);
-       }
-     }
-  );
-});
 
 module.exports = router;
