@@ -23,4 +23,5 @@
 
 
 #### Authors:
+* [Travis Kopp](https://github.com/teakopp)
 * [Austin Harshberger](https://github.com/aharshbe)
