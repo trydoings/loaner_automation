@@ -4,9 +4,10 @@ var LoanerSchema = new mongoose.Schema({
   serial : String,
   model : String,
   type : String,
-  owners : [{ handle: String, user_name : String, password : String, checkin :  String, checkout : String }],
+  owners : [{ handle: String, user_name : String, password : String, checkin :  String }],
   created_at: String,
   modified: String,
+  checkout : String,
   age : Number,
   qr : String,
   reset : Boolean,
@@ -31,12 +32,15 @@ LoanerSchema.methods.setOwners = function (handle, user_name, password, checkout
   dict["user_name"] = user_name
   dict["password"] = password
   dict["checkin"] = hours
-  dict["checkout"] = checkout
   this.owners[0] = dict
 }
 
 LoanerSchema.methods.setSerial = function (serial) {
   this.serial = serial
+}
+
+LoanerSchema.methods.setCheckout = function (checkout) {
+  this.checkout = checkout
 }
 
 LoanerSchema.methods.setModel = function (model) {

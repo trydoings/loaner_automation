@@ -1,3 +1,5 @@
+#!/usr/local/bin/python3
+
 from tkinter import *
 from tkinter import messagebox
 import sys, os
