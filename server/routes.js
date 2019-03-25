@@ -2,14 +2,15 @@ var express = require('express');
 var router = express.Router();
 var loaners = require('./models/loaner.js');
 var mongoose = require('mongoose');
-
+var generateQR = require('./generateQR.js')
+const fetch = require('node-fetch');
+var fs = require('fs');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
   console.log("we're connected!");
 });
-
 
 function parse_query(query){
   var temp = ''
@@ -155,4 +156,22 @@ router.put( '/make', (req, res, kittens) => {
 
 });
 
+router.get('/qr', (req, res)=>{
+  var serial = req.query["q"];
+  var path = req.path
+  var url = req.protocol + '://' + req.get('host') + req.originalUrl;
+  res.send(`Your loaner : ${serial}, has been checked in!`)
+
+
+  fs.exists(`./qr/${serial}.png`, function (exists) {
+    var server = req.protocol + '://' + req.get('host') + `/test/checkin?q=${serial}`
+    if (!exists) {
+
+      generateQR(server,path,serial)
+    }
+    else{
+      fetch(server)
+    }
+  });
+})
 module.exports = router;
