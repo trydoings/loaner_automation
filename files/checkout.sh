@@ -7,4 +7,11 @@ serialNumber=$(ioreg -l | awk '/IOPlatformSerialNumber/ { print $4;}' | sed -e '
 
 return_val=$(curl -s -X GET localhost:$port/$routeuser/?q=$serialNumber)
 
-echo "New user checked in."
+function prompt() {
+  str=$@
+  if [[ $str != "checked in" ]]; then
+    osascript -e 'display dialog "Computer checked out by user: '"$str"'." buttons {"Ok"} default button "Ok"'  
+  fi
+}
+
+prompt $return_val

@@ -97,9 +97,19 @@ router.get( '/checkedout', function (req, res) {
   console.log(req.query);
   loaners.find({ serial: req.query['q']}, function (err, data) { (data.length > 0) ? res.send(data[0]['checkout']) : res.send("not found");});
 });
+
+router.get( '/checkedoutlast', function (req, res) {
+  console.log(req.query);
+  loaners.find({ serial: req.query['q']}, function (err, data) {
+    (data.length > 0) ? res.send(data[0]['owners'][data[0]['owners'].length-1]['handle']) : res.send("not found");
+  });
+});
+
 router.get( '/checkedoutdate', function (req, res) {
   console.log(req.query);
-  loaners.find({ serial: req.query['q']}, function (err, data) { (data.length > 0) ? res.send(data[0]['owners'][0]['checkin']) : res.send("not found");});
+  loaners.find({ serial: req.query['q']}, function (err, data) {
+    (data.length > 0) ? res.send(data[0]['owners'][data[0]['owners'].length-1]['checkin']) : res.send("not found");
+  });
 });
 router.get( '/checkin', function (req, res) {
   serial=req.query['q']
@@ -111,7 +121,8 @@ router.get( '/checkin', function (req, res) {
        if (error) {console.log("error",error);} else {console.log("success",success);}
      }
   );
-  loaners.find({ serial: serial}, function (err, data) { (data.length > 0) ? res.send(data[0]['checkout']) : res.send("not found");});
+  loaners.find({ serial: serial}, function (err, data) {
+    (data.length > 0) ? res.send(data[0]['checkout']) : res.send("not found");});
 });
 router.get( '/checkout', function (req, res) {
   serial=req.query['q']
