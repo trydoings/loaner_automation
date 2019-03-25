@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var loaners = require('./models/loaner.js');
 var mongoose = require('mongoose');
-
+var qrGenerator = require('./qrGenerator.js')
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -72,6 +72,7 @@ function check_for_existing_entry(user_name, handle, password, serial, model, ty
       new_object.setCheckout(handle)
       new_object.setDateMod()
       actualize_object(new_object)
+      generateQR("check",serial)
     } else {
       serial = data[0].serial
       console.log(serial,": serial already exists use /find.");
