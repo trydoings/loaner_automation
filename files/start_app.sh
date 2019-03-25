@@ -9,6 +9,11 @@ serialNumber=$(ioreg -l | awk '/IOPlatformSerialNumber/ { print $4;}' | sed -e '
 return_val=$(curl -s -X GET localhost:$port/$routeuser/?q=$serialNumber)
 check_in_date=$(curl -s -X GET localhost:$port/$routedate/?q=$serialNumber)
 
+function status() {
+  str=$@
+  osascript -e 'display dialog "'"$str"'" buttons {"Ok"} default button "Ok"'
+}
+
 echo "Current user" $return_val
 
 if [[ $return_val == 'not found' ]]; then
@@ -31,4 +36,5 @@ function prompt() {
 prompt
 else
   echo "Loaner checked in by $return_val at $check_in_date"
+  status "Loaner checked in by $return_val at $check_in_date"
 fi
