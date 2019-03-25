@@ -51,6 +51,10 @@ LoanerSchema.methods.setType = function (type) {
   this.type = type
 }
 
+LoanerSchema.methods.setQR = function (qr) {
+  this.qr = qr
+}
+
 LoanerSchema.methods.setDateMod = function () {
   var hours = new Date(Date.now()).toLocaleString();
   this.created_at = hours

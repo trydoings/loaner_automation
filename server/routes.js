@@ -2,15 +2,14 @@ var express = require('express');
 var router = express.Router();
 var loaners = require('./models/loaner.js');
 var mongoose = require('mongoose');
-var generateQR = require('./generateQR.js')
-const fetch = require('node-fetch');
-var fs = require('fs');
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
   console.log("we're connected!");
 });
+
 
 function parse_query(query){
   var temp = ''
@@ -61,7 +60,7 @@ function addUser(handle, user_name, password, checkout, serial){
      }
   );
 }
-function check_for_existing_entry(user_name, handle, password, serial, model, type){
+function check_for_existing_entry(user_name, handle, password, serial, model, type, qr){
   loaners.find({serial:serial}, function(err,data){
     if (!data[0]){
       console.log("Serial not found. Creating new object.");
@@ -72,6 +71,7 @@ function check_for_existing_entry(user_name, handle, password, serial, model, ty
       new_object.setOwners(handle, user_name, password)
       new_object.setCheckout(handle)
       new_object.setDateMod()
+      new_object.setQR(qr)
       actualize_object(new_object)
     } else {
       serial = data[0].serial
@@ -81,14 +81,6 @@ function check_for_existing_entry(user_name, handle, password, serial, model, ty
   })
 }
 
-router.get( '/test', (req,res) => {
-  console.log("test");
-  res.send("test")
-});
-router.get( '/ok', function (req,res) {
-  console.log("ok");
-  res.send("ok")
-});
 router.get( '/find', function (req, res) {
   console.log(req.query);
   loaners.find({ serial: req.query['q']}, function (err, data) { (data.length > 0) ? res.send(data) : res.send("not found");});
@@ -111,6 +103,7 @@ router.get( '/checkedoutdate', function (req, res) {
     (data.length > 0) ? res.send(data[0]['owners'][data[0]['owners'].length-1]['checkin']) : res.send("not found");
   });
 });
+
 router.get( '/checkin', function (req, res) {
   serial=req.query['q']
   loaners.find({ serial: serial}, function (err, data) { (data.length > 0) ? console.log("checked in:",data[0]['checkout']) : console.log("not found");});
@@ -124,6 +117,7 @@ router.get( '/checkin', function (req, res) {
   loaners.find({ serial: serial}, function (err, data) {
     (data.length > 0) ? res.send(data[0]['checkout']) : res.send("not found");});
 });
+
 router.get( '/checkout', function (req, res) {
   serial=req.query['q']
 
@@ -142,6 +136,7 @@ router.get( '/checkout', function (req, res) {
   });
   loaners.find({ serial: serial}, function (err, data) { (data.length > 0) ? res.send(data[0]['checkout']) : res.send("not found");});
 });
+
 router.put( '/make', (req, res, kittens) => {
   obj_val=parse_query(req.query)
   console.log(obj_val);
@@ -151,27 +146,10 @@ router.put( '/make', (req, res, kittens) => {
   var serial = obj_val[4]
   var model = obj_val[5]
   var type = obj_val[6]
-  check_for_existing_entry(user_name, handle, password, serial, model, type)
+  var qr = obj_val[4]+'.png'
+  check_for_existing_entry(user_name, handle, password, serial, model, type, qr)
   res.send("Creation complete. Check logs for errors.")
 
 });
 
-router.get('/qr', (req, res)=>{
-  var serial = req.query["q"];
-  var path = req.path
-  var url = req.protocol + '://' + req.get('host') + req.originalUrl;
-  res.send(`Your loaner : ${serial}, has been checked in!`)
-
-
-  fs.exists(`./qr/${serial}.png`, function (exists) {
-    var server = req.protocol + '://' + req.get('host') + `/test/checkin?q=${serial}`
-    if (!exists) {
-
-      generateQR(server,path,serial)
-    }
-    else{
-      fetch(server)
-    }
-  });
-})
 module.exports = router;
