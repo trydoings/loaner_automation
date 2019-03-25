@@ -7,4 +7,4 @@ serialNumber=$(ioreg -l | awk '/IOPlatformSerialNumber/ { print $4;}' | sed -e '
 
 return_val=$(curl -s -X GET localhost:$port/$routeuser/?q=$serialNumber)
 
-echo $return_val
+echo "Previous user ("$return_val") checked out."

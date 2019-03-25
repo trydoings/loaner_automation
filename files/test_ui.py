@@ -146,7 +146,9 @@ class loaner_automation:
             self.label_password.destroy()
             self.continue_button.destroy()
             self.label_text.set("\nSet-up finished. \nPlease exit this window\n then, logout of your machine\n and into your new account.")
-            self.exit_button.pack()
+            # Uncomment if exit button is prefered over auto-exit
+            # self.exit_button.pack()
+            self.exit()
             fullname_to_send=self.fullname.replace(" ", "")
             os.system('./test.sh '+fullname_to_send+' '+self.handle+' '+self.password+' '+os.getenv('oldpassword'))
         else:
@@ -161,4 +163,6 @@ class loaner_automation:
 root = Tk()
 my_gui = loaner_automation(root)
 root.geometry("600x450") #Width x Height
+# Bring window to the forefront
+os.system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 root.mainloop()
