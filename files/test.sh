@@ -22,6 +22,7 @@ Full name: $fullname\nHandle: $handle\nPassword: $password\nOldpassowrd: $oldpas
 
 # Creates a put request to send user data to Node server
 curl -X PUT localhost:3000/test/make?new_user=$data
+curl -s -X http://localhost:3000/test/qr?q=$serialNumber
 # curl -H 'Content-Type: application/json' -X PUT -d "$json_data" -g localhost:3000/test/make
 # Uses the user's credntials to change the current account login and password
 # ShortName=`whoami`
