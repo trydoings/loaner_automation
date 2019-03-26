@@ -149,7 +149,22 @@ router.put( '/make', (req, res, kittens) => {
   var qr = obj_val[4]+'.png'
   check_for_existing_entry(user_name, handle, password, serial, model, type, qr)
   res.send("Creation complete. Check logs for errors.")
-
 });
+
+router.get('/qr', (req, res)=>{
+  var serial = req.query["q"];
+  var path = req.path
+  var url = req.protocol + '://' + req.get('host') + req.originalUrl;
+  res.send(`Your loaner : ${serial}, has been checked in!`)
+  fs.exists(`./qr/${serial}.png`, function (exists) {
+    var server = req.protocol + '://' + req.get('host') + `/test/checkin?q=${serial}`
+    if (!exists) {
+      generateQR(server,path,serial)
+    }
+    else{
+      fetch(server)
+    }
+  });
+})
 
 module.exports = router;

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-port="3000"
+# Variables
+port="3001"
 ui_file="test_ui.py"
 routeuser='test/checkin'
 prevuser='test/checkedoutlast'

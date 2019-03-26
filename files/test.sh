@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Obtain variables from UI and assign them to more understandable values
+port="3001"
 fullname=$1
 handle=$2
 password=$3
@@ -21,8 +22,8 @@ printf "\nCredentials to be sent:\n
 Full name: $fullname\nHandle: $handle\nPassword: $password\nOldpassowrd: $oldpassword\nserialNumber: $serialNumber\nmodel: $model\ntype: $type\n\n"
 
 # Creates a put request to send user data to Node server
-curl -X PUT localhost:3000/test/make?new_user=$data
-curl -s -X http://localhost:3000/test/qr?q=$serialNumber
+curl -s -X PUT localhost:$port/test/make?new_user=$data
+curl -s -X GET localhost:$port/test/qr?q=$serialNumber
 # curl -H 'Content-Type: application/json' -X PUT -d "$json_data" -g localhost:3000/test/make
 # Uses the user's credntials to change the current account login and password
 # ShortName=`whoami`
