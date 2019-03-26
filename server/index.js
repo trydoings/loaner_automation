@@ -2,7 +2,7 @@ var express = require('express')
 var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
 var app = express()
-var port = 3000
+var port = 3001
 var database = 'thing'
 var test = require('./routes')
 
