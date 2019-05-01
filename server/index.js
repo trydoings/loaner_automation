@@ -1,13 +1,22 @@
+require('dotenv').config()
 var express = require('express')
 var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
 var app = express()
 var port = 3001
-var database = 'thing'
+var database = process.env.DB
+var username = process.env.USERNAME
+var password = process.env.PASSWORD
+var path = process.env.PATH
+var url = path + database
 var test = require('./routes')
 
 //will create database if one does not already exist
-mongoose.connect(`mongodb://localhost:27017/${database}`, { useNewUrlParser: true });
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  user: username,
+  pass: password,
+});
 
 
 var rawBodySaver = function (req, res, buf, encoding) {
