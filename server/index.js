@@ -7,7 +7,7 @@ var port = 3001
 var database = process.env.DB
 var username = process.env.USERNAME
 var password = process.env.PASSWORD
-var path = process.env.PATH
+var path = process.env.MONGOOSE_URI
 var url = path + database
 var test = require('./routes')
 

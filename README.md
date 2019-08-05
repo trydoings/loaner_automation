@@ -21,6 +21,17 @@
 * cd into `loaner_automation/files`
 * Type `python3 ./loaner_automation_ui.py`
 
+### Mongo Server initialization:
+* `use <db name>`
+* `db.createUser({ user: “<username>” , pwd: “<password>“,  roles: [ { role: “readWrite”, db: “<db name>“}])`
+* `make .env`
+  * cat .env ->
+```
+DB=<dbname>
+USERNAME=<username>
+PASSWORD=<password>
+MONGOOSE_URI=mongodb://localhost:27017/
+```
 
 #### Authors:
 * [Travis Kopp](https://github.com/teakopp)
